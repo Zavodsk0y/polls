@@ -1,0 +1,17 @@
+
+
+{% load static %}
+
+<form action="{% url 'app:vote' polls.id %}" method="post">
+{% csrf_token %}
+<fieldset>
+    <legend><h1>{{ polls.title }}</h1></legend>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    {% for choice in polls.choice_set.all %}
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
+    {% endfor %}
+    <img src="{{ polls.photo.url }}" alt="Изображение отсутствует!" width="350px">
+</fieldset>
+<input type="submit" value="Проголосовать">
+</form>

@@ -1,0 +1,11 @@
+
+
+{% load static %}
+
+<h1>{{ poll.title }}</h1>
+
+<ul>
+    {% for choice, percentage in choices_with_percentages %}
+    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{choice.votes|pluralize}} ({{percentage}}%)</li>
+    {% endfor %}
+</ul>

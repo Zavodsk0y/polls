@@ -1,0 +1,24 @@
+
+{% load static %}
+
+{% block content %}
+
+{% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% for poll in polls %}
+
+{{poll.title}} <br>
+{{poll.short_description}} <br>
+{{poll.publish_date}} <br>
+<a href="{% url 'app:detail' poll.id %}">{{ poll.title }}</a>
+
+{% endfor %}
+
+{% endblock %}
+
+
+

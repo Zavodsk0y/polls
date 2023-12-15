@@ -1,0 +1,13 @@
+{% extends "layout/basic.html" %}
+
+{% block title %} Правка личных данных {% endblock %}
+
+{% block content %}
+   <h2>Правка личных данных пользователя {{ user.username }}</h2>
+   <form method="post">
+       {% csrf_token %}
+       {{form.as_p}}
+       <img src="{{ user.avatar.url }}" alt="Аватар отсутствует" width="200px">
+       <input type="submit" value="Изменить">
+   </form>
+{% endblock %}
