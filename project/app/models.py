@@ -1,8 +1,7 @@
+from django.conf import settings
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
-from django.contrib.auth.models import AbstractUser
-
-from django.conf import settings
 
 
 class AdvUser(AbstractUser):
@@ -10,13 +9,14 @@ class AdvUser(AbstractUser):
                                        verbose_name='Прошел активацию?')
     send_messages = models.BooleanField(default=True,
                                         verbose_name='Оповещать при новых комментариях?')
-    avatar = models.ImageField(default='', upload_to='media', )
+    avatar = models.ImageField(upload_to='media', blank=False, null=False)
 
     class Meta(AbstractUser.Meta):
         pass
 
     def __str__(self):
         return self.username
+
 
 class Poll(models.Model):
     title = models.CharField(max_length=255)
@@ -29,14 +29,15 @@ class Poll(models.Model):
     def __str__(self):
         return self.title
 
+
 class Choice(models.Model):
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=180)
     votes = models.IntegerField()
 
-
     def __str__(self):
         return self.choice_text
+
 
 class Voter(models.Model):
     user = models.ForeignKey(
@@ -44,13 +45,3 @@ class Voter(models.Model):
         on_delete=models.CASCADE,
     )
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
-
-
-
-
-
-
-
-
-
-
