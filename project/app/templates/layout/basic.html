@@ -1,40 +1,61 @@
-{% load static %}
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   <title>{% block title %} Главная {% endblock %} - Опросник </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <title>{% block title %} Главная {% endblock %} - Опросник </title>
 </head>
 <body>
-<div class="container-fluid">
-   <div class="d-flex flex-column flex-md-row p-3 px-md-4 mb-3  bg-white border-bottom box-shadow">
-       <h5 class="mr-md-auto p-2">Опросник</h5>
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a class="navbar-brand" href="{% url 'app:index' %}">Опросник</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Профиль
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'app:profile' %}">Мой профиль</a>
+                        <a class="dropdown-item" href="{% url 'app:profile_change' user.id %}">Изменить личные данные</a>
+                        <a class="dropdown-item" href="{% url 'app:password_change' %}">Изменить пароль</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'app:logout' %}">Выйти</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'app:user_delete' %}">Удалить</a>
+                    </div>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'app:signup' %}">Регистрация</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'app:login' %}">Вход</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
 
-       {% if user.is_authenticated %}
-       <div class="nav-item dropdown">
-           <div class="dropdown-menu">
-               <a class="dropdown-item" href="{% url 'app:profile' %}">Профиль</a>
-               <a class="dropdown-item" href="{% url 'app:profile_change' user.id %}">Изменить личные данные</a>
-               <a class="dropdown-item" href="{% url 'app:password_change' %}">Изменить пароль</a>
-               <div class="dropdown-divider"></div>
-               <a class="dropdown-item" href="{% url 'app:logout' %}">Выйти</a>
-               <div class="dropdown-divider"></div>
-               <a class="dropdown-item" href="{% url 'app:user_delete' %}">Удалить</a>
-           </div>
-       </div>
-       {% else %}
-       <a class="p-2 text-dark" href="{% url 'app:signup' %}">Регистрация</a>
-       <a class="p-2 text-dark" href="{% url 'app:login' %}">Вход</a>
-       {% endif %}
-        </div>
-   </div>
-   <div class="row">
-       <div class="container">
-       {% block content %}
-       {% endblock %}
-       </div>
-   </div>
+<div class="container">
+    {% block content %}
+    {% endblock %}
 </div>
 
 </body>

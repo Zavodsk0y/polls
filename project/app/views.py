@@ -61,7 +61,6 @@ class SignUpView(CreateView):
     form_class = SignUpForm
 
 
-
 class DeleteUserView(LoginRequiredMixin, DeleteView):
     model = AdvUser
     template_name = 'main/delete_user.html'

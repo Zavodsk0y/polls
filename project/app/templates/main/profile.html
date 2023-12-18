@@ -10,6 +10,8 @@
    {% else %}
        <p>Здравствуйте! </p>
    {% endif %}
+    {% if user.avatar %}
     <img src="{{ user.avatar.url }}" alt="Аватар отсутствует" width="200px">
+    {% endif %}
    <h3>Ваши объявления</h3>
 {% endblock %}
